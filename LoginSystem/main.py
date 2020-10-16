@@ -31,7 +31,18 @@ user = Person()
 while True:
     user_type = input("Enter user type (existing/new):\n> ")
     if user_type.lower() == "new":
-        user.name = input("Type the username you want: ")
+        while True:
+            user.name = input("Type the username you want: ")
+            try:
+                f_handle = open("credentials.json", "r")
+                credentials = json.load(f_handle)
+                if user.name in credentials:
+                    print("Sorry! This username is already taken...")
+                    continue
+                else:
+                    break
+            except:
+                break
         while True:
             user.passwd = input("New Password: ")
             confirm_password = input("Confirm Password: ")
