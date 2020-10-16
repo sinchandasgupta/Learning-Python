@@ -16,21 +16,21 @@ class Person(object):
             os.remove("credentials.json")
             f_handle = open("credentials.json", 'w')
             json.dump(credentials, f_handle)
-            f_handle.close()
         else:
             self.dict[user.name] = user.passwd
             f_handle = open("credentials.json", 'w')
             json.dump(self.dict, f_handle)
-            f_handle.close()
+        f_handle.close()
 
 
-print("Welcome to Blue-Leaf Software Solutions!\n")
+print("Hey there!\n")
 
 user = Person()
 
 while True:
-    user_type = input("Enter user type (existing/new):\n> ")
-    if user_type.lower() == "new":
+    user_type = input(
+        "Enter Command: (Type 'help' to know the commands)\n> ").lower()
+    if user_type == "new":
         while True:
             user.name = input("Type the username you want: ")
             try:
@@ -53,7 +53,7 @@ while True:
             else:
                 print("Passwords do not match!")
                 continue
-    elif user_type.lower() == "existing":
+    elif user_type == "login":
         if os.path.exists("credentials.json"):
             f_handle = open("credentials.json", 'r')
             credentials = json.load(f_handle)
@@ -72,3 +72,14 @@ while True:
                     continue
         else:
             print("There has not been any registrations!")
+    elif user_type == "help":
+        print('''
+help - Get help
+new - Make a new account
+login - Login to your existing account
+quit - quit this program\n'''
+              )
+    elif user_type == "quit":
+        quit()
+    else:
+        print("Enter a proper command\n")
