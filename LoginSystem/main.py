@@ -9,18 +9,17 @@ class Person(object):
         self.dict = {}
 
     def writing(self):
-        file_path = os.path.join("LoginSystem", "credentials.json")
-        if os.path.exists(file_path):
-            f_handle = open(file_path, 'r')
+        if os.path.exists("credentials.json"):
+            f_handle = open("credentials.json", 'r')
             credentials = json.load(f_handle)
             credentials[user.name] = user.passwd
-            os.remove(file_path)
-            f_handle = open(file_path, 'w')
+            os.remove("credentials.json")
+            f_handle = open("credentials.json", 'w')
             json.dump(credentials, f_handle)
             f_handle.close()
         else:
             self.dict[user.name] = user.passwd
-            f_handle = open(file_path, 'w')
+            f_handle = open("credentials.json", 'w')
             json.dump(self.dict, f_handle)
             f_handle.close()
 
@@ -44,18 +43,21 @@ while True:
                 print("Passwords do not match!")
                 continue
     elif user_type.lower() == "existing":
-        f_handle = open("credentials.json", 'r')
-        credentials = json.load(f_handle)
-        while True:
-            user.name = input("Enter your Username: ")
-            if user.name in credentials:
-                while True:
-                    user.passwd = input("Enter your password: ")
-                    if user.passwd == credentials.get(user.name):
-                        print("You have successfully logged in!")
-                        quit()
-                    else:
-                        print("You've entered a wrong password")
-            else:
-                print("Enter a correct username!")
-                continue
+        if os.path.exists("credentials.json"):
+            f_handle = open("credentials.json", 'r')
+            credentials = json.load(f_handle)
+            while True:
+                user.name = input("Enter your Username: ")
+                if user.name in credentials:
+                    while True:
+                        user.passwd = input("Enter your password: ")
+                        if user.passwd == credentials.get(user.name):
+                            print("You have successfully logged in!")
+                            quit()
+                        else:
+                            print("You've entered a wrong password")
+                else:
+                    print("Enter a correct username!")
+                    continue
+        else:
+            print("There has not been any registrations!")
