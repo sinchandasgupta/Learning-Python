@@ -64,9 +64,10 @@ while True:
                         user.passwd = input("Enter your password: ")
                         if user.passwd == credentials.get(user.name):
                             print("You have successfully logged in!")
-                            quit()
+                            break
                         else:
                             print("You've entered a wrong password")
+                        break
                 else:
                     print("Enter a correct username!")
                     continue
